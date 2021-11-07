@@ -14,6 +14,10 @@ class MyComponent extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
+  }
+  create(e) {
+    // add entity - POST
+    e.preventDefault();
     // get all entities - GET
     fetch("http://universities.hipolabs.com/search?country=Australia", {
       "method": "GET"
@@ -27,64 +31,72 @@ class MyComponent extends React.Component {
       .catch(err => {
         console.log(err);
       });
-      console.log(this.state.wholeData);
-      debugger;
-  }
-  create(e) {
-    // add entity - POST
-    e.preventDefault();
   }
   update(e) {
-    // update entity - PUT
+    // update entity
     e.preventDefault();
+    let newArray = this.state.wholeData;
+    let lastIndex = this.state.wholeData.length;
+    var index = lastIndex - 1;
+    if (index > -1) {
+      newArray.splice(lastIndex, 0, newArray[0]);
+    }
+    console.log(newArray);
+    this.setState({ wholeData: newArray });
   }
   delete(e) {
-    // delete entity - DELETE
+    // delete entity
     e.preventDefault();
+    let newArray = this.state.wholeData;
+    let lastIndex = this.state.wholeData.length;
+    var index = lastIndex - 1;
+    if (index > -1) {
+      newArray.splice(index, 1);
+    }
+    console.log(newArray);
+    this.setState({ wholeData: newArray });
   }
+
   handleChange(changeObject) {
     this.setState(changeObject)
   }
   render() {
-    const tableContent = this.state.wholeData.forEach(item => {
-      return(<tr>
-        <td>{item.alpha_two_code}</td> 
-        <td>{item.web_pages}</td>
-        <td>{item.name}</td>
-        <td>{item.country}</td>
-        <td>{item.domains}</td>
-      </tr>);
-    })
     return (
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-8">
             <h1 className="display-4 text-center">Displaying Australian universities</h1>
-            <table>
-              <tr>
-                <th>Code</th>
-                <th>Web Page</th> 
-                <th>Name</th>
-                <th>Country</th>
-                <th>Domains</th>
-              </tr>
-              {this.state.wholeData.map(d => (
+            <button class="button" onClick={(e) => this.create(e)}>Load</button>
+            <button class="button" onClick={(e) => this.delete(e)}>Delete</button>
+            <button class="button" onClick={(e) => this.update(e)}>Add</button>
+            {this.state.wholeData && <div>
+              <table>
                 <tr>
-                <td>{d.alpha_two_code}</td> 
-                <td>{d.web_pages}</td>
-                <td>{d.name}</td>
-                <td>{d.country}</td>
-                <td>{d.domains}</td>
-              </tr>
-              ))} 
-            </table>
+                  <th>Code</th>
+                  <th>Web Page</th>
+                  <th>Name</th>
+                  <th>Country</th>
+                  <th>Domains</th>
+                </tr>
+                {this.state.wholeData.map(d => (
+                  <tr>
+                    <td>{d.alpha_two_code}</td>
+                    <td>{d.web_pages}</td>
+                    <td>{d.name}</td>
+                    <td>{d.country}</td>
+                    <td>{d.domains}</td>
+                  </tr>
+                ))}
+              </table>
+            </div>}
+
           </div>
         </div>
       </div>
     );
   }
 }
-let domContainer =  document.getElementById('root');
+let domContainer = document.getElementById('root');
 ReactDOM.render(<MyComponent />, domContainer);
 
 
