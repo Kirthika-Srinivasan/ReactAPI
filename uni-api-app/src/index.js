@@ -1,17 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './index.css';
 
 class MyComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      wholeData: [],
-      alpha_two_code: '',
-      web_pages: '',
-      name: '',
-      country: '',
-      domains: '',
-      state_province: ''
+      wholeData: []
     };
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
@@ -33,6 +28,7 @@ class MyComponent extends React.Component {
         console.log(err);
       });
       console.log(this.state.wholeData);
+      debugger;
   }
   create(e) {
     // add entity - POST
@@ -50,12 +46,38 @@ class MyComponent extends React.Component {
     this.setState(changeObject)
   }
   render() {
+    const tableContent = this.state.wholeData.forEach(item => {
+      return(<tr>
+        <td>{item.alpha_two_code}</td> 
+        <td>{item.web_pages}</td>
+        <td>{item.name}</td>
+        <td>{item.country}</td>
+        <td>{item.domains}</td>
+      </tr>);
+    })
     return (
       <div className="container">
         <div className="row justify-content-center">
           <div className="col-md-8">
             <h1 className="display-4 text-center">Displaying Australian universities</h1>
-            
+            <table>
+              <tr>
+                <th>Code</th>
+                <th>Web Page</th> 
+                <th>Name</th>
+                <th>Country</th>
+                <th>Domains</th>
+              </tr>
+              {this.state.wholeData.map(d => (
+                <tr>
+                <td>{d.alpha_two_code}</td> 
+                <td>{d.web_pages}</td>
+                <td>{d.name}</td>
+                <td>{d.country}</td>
+                <td>{d.domains}</td>
+              </tr>
+              ))} 
+            </table>
           </div>
         </div>
       </div>
