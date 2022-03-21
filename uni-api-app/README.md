@@ -1,7 +1,7 @@
 This repository is created to solve the problem as given below:
 
-**Task - API - React
-Description** - Built a single Page React application which fetches information from an API and displays
+# Task - API - React
+**Description** - Built a single Page React application which fetches information from an API and displays
 the results on a table.
 
 API Endpoint: http://universities.hipolabs.com/search?country=Australia
@@ -18,11 +18,11 @@ should remain as it is
 
 
 # React Instructions:
-# Getting Started with Create React App
+Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+Available Scripts
 
 In the project directory, you can run:
 
